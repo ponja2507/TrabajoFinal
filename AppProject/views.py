@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from django.db.models import Q
 
-from AppProject.models import Producto
-from AppProject.forms import crearProducto
+from AppProject.models import Producto, Empleado
+from AppProject.forms import crearProducto, crearEmpleado
+
 
 # Create your views here.
 
@@ -62,14 +63,14 @@ def editar_producto(request,producto_id):
             dato_producto = formulario.cleaned_data
             
             producto.nombre = dato_producto["nombre"]
-            producto.apellido = dato_producto["apellido"]
-            producto.email = dato_producto["email"]
+            producto.proveedor = dato_producto["proveedor"]
+            producto.precio = dato_producto["precio"]
             producto.save()
 
             return redirect("productos")
 
     
-    formulario = crearProducto(initial={"nombre":producto.nombre, "apellido":producto.apellido, "email": producto.email})
+    formulario = crearProducto(initial={"nombre":producto.nombre, "proveedor":producto.proveedor, "precio": producto.precio})
     
     return render(request,"producto_form.html",{"form":formulario})
 
@@ -90,6 +91,78 @@ def clientes(request):
     
     return render (request, 'clientes.html')
 
+
+
+
+
+#EMPLEADOS
+
 def empleados(request):
+
+    if request.method == "POST":
+        
+        search = request.POST["search"]
+
+        if search != "":
+
+            empleados = Empleado.objects.filter( Q(nombre__icontains=search) | Q(apellido__icontains=search) | Q(puesto__icontains=search) ).values()
+
+            return render(request,"empleados.html",{"empleados":empleados, "search":True, "busqueda":search})
+
+    empleados = Empleado.objects.all()
+
+    return render (request, 'empleados.html', {'empleados':empleados})
+
+def crear_empleado(request):
     
-    return render (request, 'empleados.html')
+        if request.method == "POST":
+        
+            formulario = crearEmpleado(request.POST)
+
+            if formulario.is_valid():
+            
+                dato = formulario.cleaned_data
+
+                empleado = Empleado(nombre=dato["nombre"], apellido=dato["apellido"],puesto=dato["puesto"])
+                empleado.save()
+
+                return redirect("empleados")
+
+            return render(request,"empleado_form.html",{"form":formulario})
+
+        formulario = crearEmpleado()
+
+        return render(request,"empleado_form.html",{"form":formulario})
+
+def editar_empleado(request,empleado_id):
+
+    empleado = Empleado.objects.get(id=empleado_id)
+
+    if request.method == "POST":
+
+        formulario = crearEmpleado(request.POST)
+
+        if formulario.is_valid():
+            
+            dato_empleado = formulario.cleaned_data
+            
+            empleado.nombre = dato_empleado["nombre"]
+            empleado.apellido = dato_empleado["apellido"]
+            empleado.puesto = dato_empleado["puesto"]
+            empleado.save()
+
+            return redirect("empleados")
+
+    
+    formulario = crearEmpleado(initial={"nombre":empleado.nombre, "apellido":empleado.apellido, "puesto": empleado.puesto})
+    
+    return render(request,"empleado_form.html",{"form":formulario})
+
+
+def eliminar_empleado(request,empleado_id):
+
+    empleado = Empleado.objects.get(id=empleado_id)
+    empleado.delete()
+
+    return redirect("empleados")
+

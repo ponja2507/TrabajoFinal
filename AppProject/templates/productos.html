@@ -10,9 +10,6 @@
 		<input  type="search" name="search" placeholder="Buscar producto" aria-label="Search">
 		<button class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" type="submit"> <i class="bi bi-search"></i> Buscar</button>
 		<a class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" href="{% url 'crear_producto' %}"> <i class="bi bi-plus-lg"></i> Crear Producto</a>
-		{% comment %}
-			{% url 'crear_producto' %}
-		{% endcomment %}
 	</form>
 
 <h4>Resultados
@@ -25,13 +22,13 @@
 <br>
 <div class="row gx-5 justify-content-center">
 <div class="col-lg-10 table-responsive">
-	<table class="table table-theme">
+	<table width="1000" style="margin: 0 auto;" class="table table-theme">
 		<thead>
 			<tr>
 				<th scope="col">#</th>
 				<th scope="col">Nombre</th>
 				<th scope="col">Proveedor</th>
-				<th scope="col">Precio</th>
+				<th scope="col">Precio (U$D)</th>
 				<th scope="col">Acciones</th>
 			</tr>
 		</thead>
@@ -44,12 +41,8 @@
 					<td>{{producto.proveedor}}</td>
 					<td>{{producto.precio}}</td>
 					<td>
-						<a href="{% url 'editar_producto' producto.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
+						<a href="{% url 'editar_producto' producto.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar |</a>   
 						<a href="{% url 'eliminar_producto' producto.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
-						{% comment %}
-							{% url 'editar_producto' producto.id %}
-							{% url 'eliminar_producto' producto.id %}
-						{% endcomment %}
 					</td>
 				</tr>
 			{% endfor %}
