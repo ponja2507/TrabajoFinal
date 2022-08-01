@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block cambios %}
+
+
+<header id="header">
+	<h1 style="color: black;"> <u>Agregar Cliente</u> </h1>
+    <br>
+    <br>
+    <p>Para crear un nuevo cliente, es necesario completar los siguientes campos:</p>
+
+    <form action="{% url 'ClienteFormulario' %}" method="POST">{% csrf_token %}
+
+        <p>Nombre: <input style="color: black;"type="text" name="nombre"></p>
+        <p>Apellido: <input style="color: black;" type="text" name = "apellido"></p>
+        <p>E-Mail: <input style="color: black;" type="text" name = "mail"> </p>
+        <input style="color: black;" type="submit" value="Enviar">
+
+    </form>
+        <div class="container">
+            <a style="color: black;" class="navbar-brand" href="{% url 'clientes' %}" value="VOLVER"> <u><b>ATRÁS</b></u></a>
+        </div>
+
+</header>
+{% endblock cambios %}

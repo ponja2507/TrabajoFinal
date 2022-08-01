@@ -8,6 +8,9 @@ class Cliente (models.Model):
     apellido = models.CharField(max_length=50)
     mail = models.EmailField(max_length=254)
 
+    def __str__(self) -> str:
+        return f'Apellido y Nombre: {self.apellido}, {self.nombre} || E-mail: {self.mail}'
+
 class Producto (models.Model):
     nombre = models.CharField(max_length=50)
     proveedor = models.CharField(max_length=50)

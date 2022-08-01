@@ -7,3 +7,7 @@ class crearProducto(forms.Form):
     proveedor = forms.CharField(max_length=50)
     precio = forms.IntegerField()
 
+class crearCliente(forms.Form):
+    nombre = forms.CharField(max_length=50)
+    apellido = forms.CharField(max_length=50)
+    mail = forms.EmailField(max_length=254)

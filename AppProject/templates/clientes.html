@@ -2,8 +2,24 @@
 {% load static %}
 
 {% block cambios %}
-	
+<header id="header">
 
+    <h1 style="color: black;"> <u>Principales Clientes</u> </h1>
+	<br>
+	<br>
+	<p style="color: black;"><u> Principales clientes de <i>Coder Pharma</i></u></p>
 	
+	<ul>
+		{% for cliente in vistaClientes %}
+			<li>{{cliente.nombre}} - {{cliente.apellido}} | {{cliente.mail}}</li>
+		{% endfor %}	
+	</ul>
 
+
+
+	<form>
+			<a class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" href="{% url 'ClienteFormulario' %}"> <i class="bi bi-plus-lg"></i> Agregar Cliente</a>
+	</form>
+
+</header>
 {% endblock cambios %}

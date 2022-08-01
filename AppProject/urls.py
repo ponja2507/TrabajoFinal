@@ -2,6 +2,7 @@
 from django.urls import path
 
 from AppProject.views import inicio, clientes, empleados, productos, crear_producto, editar_producto, eliminar_producto
+from AppProject.views import clienteFormulario
 
 
 urlpatterns = [
@@ -12,4 +13,5 @@ urlpatterns = [
     path('eliminar_producto/<producto_id>', eliminar_producto, name="eliminar_producto"),
     path('clientes/', clientes, name="clientes"),
     path('empleados/', empleados, name="empleados"),
+    path('cliente-formulario', clienteFormulario, name = "ClienteFormulario"  )
 ]
