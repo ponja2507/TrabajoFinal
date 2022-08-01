@@ -12,3 +12,7 @@ class crearEmpleado(forms.Form):
     nombre = forms.CharField(max_length=50)
     apellido = forms.CharField(max_length=50)
     puesto = forms.CharField(max_length=50)
+class crearCliente(forms.Form):
+    nombre = forms.CharField(max_length=50)
+    apellido = forms.CharField(max_length=50)
+    mail = forms.EmailField(max_length=254)

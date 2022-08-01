@@ -1,9 +1,8 @@
 from django.shortcuts import redirect, render
 from django.db.models import Q
 
-from AppProject.models import Producto, Empleado
-from AppProject.forms import crearProducto, crearEmpleado
-
+from AppProject.models import Producto, Empleado, Cliente
+from AppProject.forms import crearProducto, crearEmpleado, crearProducto
 
 # Create your views here.
 
@@ -11,7 +10,7 @@ def inicio(request):
 
     return render (request, 'inicio.html')
 
-#PRODUCTOS
+# <---------- PRODUCTOS ---------->
 
 def productos(request):
 
@@ -30,16 +29,17 @@ def productos(request):
     return render (request, 'productos.html', {'productos':productos})
 
 def crear_producto(request):
-    
+
         if request.method == "POST":
-        
+
             formulario = crearProducto(request.POST)
 
             if formulario.is_valid():
-            
+
                 dato = formulario.cleaned_data
 
                 producto = Producto(nombre=dato["nombre"], proveedor=dato["proveedor"],precio=dato["precio"])
+
                 producto.save()
 
                 return redirect("productos")
@@ -49,6 +49,7 @@ def crear_producto(request):
         formulario = crearProducto()
 
         return render(request,"producto_form.html",{"form":formulario})
+
 
 def editar_producto(request,producto_id):
 
@@ -74,7 +75,6 @@ def editar_producto(request,producto_id):
     
     return render(request,"producto_form.html",{"form":formulario})
 
-
 def eliminar_producto(request,producto_id):
 
     producto = Producto.objects.get(id=producto_id)
@@ -82,21 +82,25 @@ def eliminar_producto(request,producto_id):
 
     return redirect("productos")
 
-
-
-
-
-#CLIENTES
+# <---------- CLIENTES ---------->
 def clientes(request):
-    
     return render (request, 'clientes.html')
 
+def clienteFormulario(request):
+    if request.method == 'POST':
 
+        cliente = Cliente(nombre=request.POST['nombre'], apellido=request.POST['apellido'], mail=request.POST['mail'])
+        cliente.save()
 
+        return render(request,"clientes.html")
 
+    return render (request,"clienteFormulario.html")
 
-#EMPLEADOS
+def vistaClientes(self):
+    listaClientes = Cliente.objects.all()
+    return render(self, "clientes.html", {"vistaClientes": listaClientes})
 
+# <---------- EMPLEADOS ---------->
 def empleados(request):
 
     if request.method == "POST":
